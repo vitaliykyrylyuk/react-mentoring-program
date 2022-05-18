@@ -17,7 +17,6 @@ function App() {
       <main className="App-main">
         <ClassComponentExamplePure />
         <ClassComponentExample />
-        <FunctionalComponentExample />
         <FunctionalComponentExample name='parent props' />
       </main>
     </div>
