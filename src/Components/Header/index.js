@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import SearchForm from '../SearchForm'
 import Modal from '../Modal'
+import MovieForm from '../MovieForm'
 
 function Header() {
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
 
   const toggleModal = (modalState) => setShowModal(modalState)
 
@@ -22,7 +23,11 @@ function Header() {
           </svg>
           add movie
         </button>
-        {showModal && <Modal toggleModal={toggleModal} />}
+        {showModal && (
+          <Modal title="Add movie" toggleModal={toggleModal}>
+            <MovieForm />
+          </Modal>
+        )}
       </div>
       <SearchForm />
     </>

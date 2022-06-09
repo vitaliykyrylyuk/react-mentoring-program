@@ -1,5 +1,4 @@
 import React from 'react'
-import MovieForm from '../MovieForm'
 
 function Modal(props) {
   function handleModal(modalState) {
@@ -30,9 +29,9 @@ function Modal(props) {
             </button>
             <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                <div className="text-lg leading-6 font-light text-neutral-100">ADD MOVIE</div>
+                <div className="text-lg leading-6 font-light text-neutral-100 uppercase">{props.title}</div>
                 <div className="mt-3">
-                  <MovieForm />
+                  {props.children}
                 </div>
               </div>
             </div>

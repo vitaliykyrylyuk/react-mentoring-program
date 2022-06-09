@@ -1,8 +1,8 @@
 import React from 'react'
 
-function MovieForm() {
+function MovieForm(props) {
   return (
-    <form action="#" method="POST">
+    <form action={props?.id ? `edit/${props?.id}` : '' } method="POST">
       <div className="grid grid-cols-7 gap-6">
         <div className="col-span-7 sm:col-span-4">
           <label htmlFor="title" className="block text-xs font-medium text-rose-400 mb-2 uppercase">

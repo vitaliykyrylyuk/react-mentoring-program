@@ -1,13 +1,17 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import useModalHide from '../../Utils/useModalHide'
+import Modal from '../Modal'
+import MovieForm from '../MovieForm'
 
 function MovieCard(props) {
-  const { image, title, genre, year } = props.value
+  const { id, image, title, genre, year } = props.value
 
   const toggleRef = useRef(null)
   const [dropdownState, setDropdownState] = useModalHide(toggleRef, false)
+  const [showModal, setShowModal] = useState(false)
 
+  const toggleModal = (modalState) => setShowModal(modalState)
   const handleDropdown = () => setDropdownState(!dropdownState)
 
   return (
@@ -43,7 +47,8 @@ function MovieCard(props) {
               className="text-gray-700 block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex="-1"
-              id="menu-item-0">
+              id="menu-item-0"
+              onClick={() => toggleModal(true)}>
               Edit
             </a>
             <a
@@ -56,6 +61,11 @@ function MovieCard(props) {
             </a>
           </div>
         </div>
+      )}
+      {showModal && (
+        <Modal title="Edit movie" toggleModal={toggleModal}>
+          <MovieForm id={id} />
+        </Modal>
       )}
 
       <div className="flex justify-between pt-4 font-semibold text-neutral-300 text-xl">
