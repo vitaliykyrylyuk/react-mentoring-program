@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { createContext, useState } from 'react'
 import Header from './Components/Header'
 import Main from './Components/Main'
 import Footer from './Components/Footer'
 
-function App() {
+const MovieDetailContext = createContext({})
+
+function App () {
+  const [movieName, setMovieName] = useState('Inception')
+
   return (
     <>
-      <Header />
-      <Main />
-      <Footer />
+      <MovieDetailContext.Provider value={movieName}>
+        <Header movieDetails={movieName}/>
+        <Main movieDetails={movieName}/>
+      </MovieDetailContext.Provider>
+      <Footer/>
     </>
   )
 }

@@ -1,106 +1,72 @@
 import React from 'react'
+import Button from '../Button'
+import Input from '../Input'
 
 function MovieForm(props) {
+  const { id, toggleModal } = props
+
+  function handleModal(modalState) {
+    toggleModal(modalState)
+  }
+
   return (
-    <form action={props?.id ? `edit/${props?.id}` : '' } method="POST">
+    <form action={id ? `edit/${id}` : ''} method="POST">
       <div className="grid grid-cols-7 gap-6">
         <div className="col-span-7 sm:col-span-4">
-          <label htmlFor="title" className="block text-xs font-medium text-rose-400 mb-2 uppercase">
-            TITLE
-          </label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            placeholder="Movie title"
-            className="mt-1 p-2 bg-gray-600 text-neutral-300 focus:ring-rose-500 focus:border-rose-500 block w-full sm:text-sm border-rose-300 rounded-sm"
-          />
+          <Input label="title" type="text" name="title" id="title" placeholder="Movie title" />
         </div>
         <div className="col-span-7 sm:col-span-3">
-          <label
-            htmlFor="release-date"
-            className="block text-xs font-medium text-rose-400 mb-2 uppercase">
-            RELEASE DATE
-          </label>
-          <input
-            type="text"
+          <Input
+            label="release date"
+            type="date"
             name="release-date"
             id="release-date"
             placeholder="Select Date"
-            className="mt-1 p-2 bg-gray-600 text-neutral-300 focus:ring-rose-500 focus:border-rose-500 block w-full sm:text-sm border-rose-300 rounded-sm"
           />
         </div>
         <div className="col-span-7 sm:col-span-4">
-          <label
-            htmlFor="movie-url"
-            className="block text-xs font-medium text-rose-400 mb-2 uppercase">
-            MOVIE URL
-          </label>
-          <input
+          <Input
+            label="MOVIE URL"
             type="text"
             name="movie-url"
             id="movie-url"
             placeholder="Movie title"
-            className="mt-1 p-2 bg-gray-600 text-neutral-300 focus:ring-rose-500 focus:border-rose-500 block w-full sm:text-sm border-rose-300 rounded-sm"
           />
         </div>
         <div className="col-span-7 sm:col-span-3">
-          <label
-            htmlFor="rating"
-            className="block text-xs font-medium text-rose-400 mb-2 uppercase">
-            RATING
-          </label>
-          <input
-            type="text"
-            name="rating"
-            id="rating"
-            placeholder="7.8"
-            className="mt-1 p-2 bg-gray-600 text-neutral-300 focus:ring-rose-500 focus:border-rose-500 block w-full sm:text-sm border-rose-300 rounded-sm"
-          />
+          <Input label="rating" type="text" name="rating" id="rating" placeholder="7.8" />
         </div>
         <div className="col-span-7 sm:col-span-4">
-          <label htmlFor="genre" className="block text-xs font-medium text-rose-400 mb-2 uppercase">
-            genre
-          </label>
-          <select
-            id="genre"
-            name="genre"
-            className="mt-1 block w-full p-2 text-neutral-300 border-rose-300 bg-gray-600 rounded-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm">
-            <option>Select Genre</option>
-          </select>
+          <Input label="genre" type="text" name="genre" id="genre" placeholder="Select Genre" />
         </div>
         <div className="col-span-7 sm:col-span-3">
-          <label
-            htmlFor="runtime"
-            className="block text-xs font-medium text-rose-400 mb-2 uppercase">
-            RUNTIME
-          </label>
-          <input
-            type="text"
-            name="runtime"
-            id="runtime"
-            placeholder="minutes"
-            className="mt-1 p-2 bg-gray-600 text-neutral-300 focus:ring-rose-500 focus:border-rose-500 block w-full sm:text-sm border-rose-300 rounded-sm"
-          />
+          <Input label="runtime" type="text" name="runtime" id="runtime" placeholder="Minutes" />
         </div>
       </div>
-
       <div className="mt-6">
-        <label
-          htmlFor="overview"
-          className="block text-xs font-medium text-rose-400 mb-2 uppercase">
-          OVERVIEW
-        </label>
-        <div className="mt-1">
-          <textarea
-            id="overview"
-            name="overview"
-            rows={3}
-            className="mt-1 p-2 bg-gray-600 text-neutral-300 focus:ring-rose-500 focus:border-rose-500 block w-full sm:text-sm border-rose-300 rounded-sm"
-            placeholder="Movie description"
-            defaultValue={''}
-          />
-        </div>
+        <Input
+          label="overview"
+          type="textarea"
+          name="overview"
+          id="overview"
+          placeholder="Movie description"
+          rows={3}
+          defaultValue={''}
+        />
+      </div>
+      <div className="mt-6 flex justify-end">
+        <Button
+          className={'ml-5'}
+          theme={'outline'}
+          onClick={() => handleModal(false)}
+          text={'Reset'}
+        />
+        <Button
+          className={'ml-5'}
+          theme={'primary'}
+          onClick={() => handleModal(false)}
+          text={'Submit'}
+        />
       </div>
     </form>
   )

@@ -8,15 +8,17 @@ import ErrorBoundary from '../ErrorBoundary'
 
 function App() {
   return (
-    <main className="p-10 bg-slate-900">
-      <div className="flex justify-between border-b-2 border-gray-800">
-        <Nav />
-        <ResultsSort />
+    <main className="p-10 bg-gray-900">
+      <div className="max-w-screen-lg mx-auto">
+        <div className="flex justify-between border-b-2 border-gray-600">
+          <Nav />
+          <ResultsSort />
+        </div>
+        <ResultsCount />
+        <ErrorBoundary>
+          <MoviesList />
+        </ErrorBoundary>
       </div>
-      <ResultsCount />
-      <ErrorBoundary>
-        <MoviesList />
-      </ErrorBoundary>
     </main>
   )
 }

@@ -3,37 +3,40 @@ import PropTypes from 'prop-types'
 import useModalHide from '../../Utils/useModalHide'
 import Modal from '../Modal'
 import MovieForm from '../MovieForm'
+import DeleteForm from '../DeleteForm'
+import { DotsIcon } from '../Icons'
+import DropdownItem from '../DropdownItem'
 
 function MovieCard(props) {
   const { id, image, title, genre, year } = props.value
 
   const toggleRef = useRef(null)
   const [dropdownState, setDropdownState] = useModalHide(toggleRef, false)
-  const [showModal, setShowModal] = useState(false)
 
-  const toggleModal = (modalState) => setShowModal(modalState)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+
+  const toggleEditModal = React.useCallback(
+    (modalState) => setShowEditModal(modalState),
+    []
+  )
+  const toggleDeleteModal = React.useCallback(
+    (modalState) => setShowDeleteModal(modalState),
+    []
+  )
+
   const handleDropdown = () => setDropdownState(!dropdownState)
 
   return (
     <div className="group relative">
       <img className="w-full" src={image} alt={title} />
-
-      <svg
-        className="hidden opacity-70 group-hover:flex absolute right-2 top-0 cursor-pointer"
-        width="44"
-        height="44"
-        viewBox="0 0 44 44"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        className="w-10 h-10 hidden group-hover:flex absolute right-2 top-2 cursor-pointer rounded-full bg-opacity-80 bg-gray-900 text-white"
         onClick={handleDropdown}
         ref={toggleRef}>
-        <g>
-          <circle cx="22" cy="22" r="18" fill="#2A202D" />
-        </g>
-        <circle cx="22" cy="15" r="2" fill="white" />
-        <circle cx="22" cy="22.5" r="2" fill="white" />
-        <circle cx="22" cy="30" r="2" fill="white" />
-      </svg>
+        <DotsIcon />
+      </div>
+
       {dropdownState && (
         <div
           className="origin-top-right absolute z-10 right-0 top-10 mt-2 w-56 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -42,29 +45,19 @@ function MovieCard(props) {
           aria-labelledby="menu-button"
           tabIndex="-1">
           <div className="py-1" role="none">
-            <a
-              href="#"
-              className="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabIndex="-1"
-              id="menu-item-0"
-              onClick={() => toggleModal(true)}>
-              Edit
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabIndex="-1"
-              id="menu-item-0">
-              Delete
-            </a>
+            <DropdownItem onClick={() => toggleEditModal(true)} text={'Edit'} />
+            <DropdownItem onClick={() => toggleDeleteModal(true)} text={'Delete'} />
           </div>
         </div>
       )}
-      {showModal && (
-        <Modal title="Edit movie" toggleModal={toggleModal}>
-          <MovieForm id={id} />
+      {showEditModal && (
+        <Modal title="Edit movie" toggleModal={toggleEditModal}>
+          <MovieForm id={id} toggleModal={toggleEditModal} />
+        </Modal>
+      )}
+      {showDeleteModal && (
+        <Modal title="Delete movie" toggleModal={toggleDeleteModal}>
+          <DeleteForm id={id} toggleModal={toggleDeleteModal} />
         </Modal>
       )}
 
