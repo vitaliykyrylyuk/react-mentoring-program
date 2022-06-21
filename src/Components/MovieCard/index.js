@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import useModalHide from '../../Utils/useModalHide'
 import Modal from '../Modal'
@@ -6,8 +6,11 @@ import MovieForm from '../MovieForm'
 import DeleteForm from '../DeleteForm'
 import { DotsIcon } from '../Icons'
 import DropdownItem from '../DropdownItem'
+import { MovieContext } from '../../Utils/MovieContext'
 
 function MovieCard(props) {
+  const { setCurrentMovie } = useContext(MovieContext)
+
   const { id, image, title, genre, year } = props.value
 
   const toggleRef = useRef(null)
@@ -16,20 +19,28 @@ function MovieCard(props) {
   const [showEditModal, setShowEditModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
-  const toggleEditModal = React.useCallback(
-    (modalState) => setShowEditModal(modalState),
-    []
-  )
-  const toggleDeleteModal = React.useCallback(
-    (modalState) => setShowDeleteModal(modalState),
-    []
-  )
+  const toggleEditModal = React.useCallback((modalState) => setShowEditModal(modalState), [])
+  const toggleDeleteModal = React.useCallback((modalState) => setShowDeleteModal(modalState), [])
 
   const handleDropdown = () => setDropdownState(!dropdownState)
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
 
   return (
     <div className="group relative">
-      <img className="w-full" src={image} alt={title} />
+      <img
+        className="w-full cursor-pointer"
+        src={image}
+        alt={title}
+        onClick={() => {
+          setCurrentMovie(props.value)
+          scrollTop()
+        }}
+      />
       <div
         className="w-10 h-10 hidden group-hover:flex absolute right-2 top-2 cursor-pointer rounded-full bg-opacity-80 bg-gray-900 text-white"
         onClick={handleDropdown}
@@ -62,7 +73,14 @@ function MovieCard(props) {
       )}
 
       <div className="flex justify-between pt-4 font-semibold text-neutral-300 text-xl">
-        <div className="">{title}</div>
+        <div
+          className="cursor-pointer"
+          onClick={() => {
+            setCurrentMovie(props.value)
+            scrollTop()
+          }}>
+          {title}
+        </div>
         {year && (
           <div>
             <span className="px-2 py-1 border-2 rounded border-gray-700">{year}</span>
