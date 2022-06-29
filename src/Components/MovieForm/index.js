@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '../Button'
 import Input from '../Input'
+import GenresDropdown from '../GenresDropdown'
 
 function MovieForm(props) {
   const { id, toggleModal } = props
@@ -8,6 +9,13 @@ function MovieForm(props) {
   function handleModal(modalState) {
     toggleModal(modalState)
   }
+  
+  const availableGenres = [
+    'Crime',
+    'Documentary',
+    'Horror',
+    'Comedy'
+  ]
 
   return (
     <form action={id ? `edit/${id}` : ''} method="POST">
@@ -34,10 +42,10 @@ function MovieForm(props) {
           />
         </div>
         <div className="col-span-7 sm:col-span-3">
-          <Input label="rating" type="text" name="rating" id="rating" placeholder="7.8" />
+          <Input label="rating" type="number" min="0" max="10" name="rating" id="rating" placeholder="7.8" />
         </div>
-        <div className="col-span-7 sm:col-span-4">
-          <Input label="genre" type="text" name="genre" id="genre" placeholder="Select Genre" />
+        <div className="col-span-7 sm:col-span-4 relative">
+          <GenresDropdown availableGenres={availableGenres} />
         </div>
         <div className="col-span-7 sm:col-span-3">
           <Input label="runtime" type="text" name="runtime" id="runtime" placeholder="Minutes" />
