@@ -3,15 +3,17 @@ import SearchForm from '../SearchForm'
 import Modal from '../Modal'
 import MovieForm from '../MovieForm'
 import Button from '../Button'
+import { MovieContext } from '../../Utils/MovieContext'
+import MovieDetails from '../MovieDetails'
+import MovieDetailsSwitch from '../MovieDetailsSwitch'
 
-function Header(props) {
-  // const contextData = useContext(MovieDetailContext)
+function Header() {
+  const { currentMovie } = useContext(MovieContext)
+
   const [showModal, setShowModal] = useState(false)
 
-  const toggleModal = React.useCallback(
-    (modalState) => setShowModal(modalState),
-    []
-  )
+  const toggleModal = React.useCallback((modalState) => setShowModal(modalState), [])
+  const isMovieDetailsVisible = Object.keys(currentMovie).length !== 0
 
   return (
     <>
@@ -21,14 +23,13 @@ function Header(props) {
             <span className="font-black">netflix</span>
             roulette
           </h1>
-          <Button theme={'secondary'} text={'+ add movie'} onClick={() => toggleModal(true)} />
+          <MovieDetailsSwitch {...{ isMovieDetailsVisible, toggleModal }} />
           {showModal && (
             <Modal title="Add movie" toggleModal={toggleModal}>
               <MovieForm toggleModal={toggleModal} />
             </Modal>
           )}
-          <SearchForm />
-          {/*{contextData && <div> Details: {contextData}</div>}*/}
+          {isMovieDetailsVisible ? <MovieDetails /> : <SearchForm />}
         </div>
       </div>
     </>

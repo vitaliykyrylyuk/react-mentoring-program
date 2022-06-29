@@ -6,7 +6,7 @@ import ResultsSort from '../ResultsSort'
 import ResultsCount from '../ResultsCount'
 import ErrorBoundary from '../ErrorBoundary'
 
-function App() {
+function Main() {
   return (
     <main className="p-10 bg-gray-900">
       <div className="max-w-screen-lg mx-auto">
@@ -23,4 +23,4 @@ function App() {
   )
 }
 
-export default App
+export default Main
