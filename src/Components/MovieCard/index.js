@@ -11,7 +11,7 @@ import { MovieContext } from '../../Utils/MovieContext'
 function MovieCard(props) {
   const { setCurrentMovie } = useContext(MovieContext)
 
-  const { id, image, title, genre, year } = props.value
+  const { id, poster_path: image, title, genres, release_date: year } = props.value
 
   const toggleRef = useRef(null)
   const [dropdownState, setDropdownState] = useModalHide(toggleRef, false)
@@ -36,6 +36,7 @@ function MovieCard(props) {
         className="w-full cursor-pointer"
         src={image}
         alt={title}
+        onError={(i) => (i.target.src = 'https://via.placeholder.com/400x600.png?text=NO+IMAGE')}
         onClick={() => {
           setCurrentMovie(props.value)
           scrollTop()
@@ -50,7 +51,7 @@ function MovieCard(props) {
 
       {dropdownState && (
         <div
-          className="origin-top-right absolute z-10 right-0 top-10 mt-2 w-56 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="origin-top-right absolute z-10 right-0 top-10 mt-2 w-56 rounded-sm shadow-lg bg-gray-600 ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
@@ -83,13 +84,15 @@ function MovieCard(props) {
         </div>
         {year && (
           <div>
-            <span className="px-2 py-1 border-2 rounded border-gray-700">{year}</span>
+            <span className="px-2 py-1 border-2 rounded border-gray-700">{parseInt(year)}</span>
           </div>
         )}
       </div>
-      {genre && (
+      {genres.length && (
         <div className="py-2">
-          <span className="inline-block text-sm font-semibold text-gray-600">{genre}</span>
+          <span className="inline-block text-sm font-semibold text-gray-600">
+            {genres.join(', ')}
+          </span>
         </div>
       )}
     </div>

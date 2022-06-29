@@ -4,11 +4,24 @@ import { MovieContext } from '../../Utils/MovieContext'
 function MovieDetails() {
   const { currentMovie } = useContext(MovieContext)
 
-  const { image, title, genre, year, duration, description, rating } = currentMovie
+  const {
+    title,
+    genres,
+    poster_path: image,
+    release_date: year,
+    runtime: duration,
+    overview: description,
+    vote_average: rating
+  } = currentMovie
 
   return (
     <div className="group relative w-full flex pt-12">
-      <img className="w-1/3" src={image} alt={title} />
+      <img
+        className="w-1/3"
+        src={image}
+        alt={title}
+        onError={(i) => (i.target.src = 'https://via.placeholder.com/400x600.png?text=NO+IMAGE')}
+      />
       <div className="w-2/3 pl-12">
         <div className="flex items-center pt-4 font-light text-neutral-300 text-xl">
           <div className="text-4xl text-neutral-100 mr-5">{title}</div>
@@ -16,14 +29,14 @@ function MovieDetails() {
             {rating}
           </div>
         </div>
-        {genre && (
+        {genres.length && (
           <div className="py-2">
-            <span className="inline-block text-sm text-gray-300">{genre}</span>
+            <span className="inline-block text-sm text-gray-300">{genres.join(', ')}</span>
           </div>
         )}
         <div className="flex text-rose-400 text-xl">
-          {year && <span className="py-5 mr-5">{year}</span>}
-          {duration && <span className="py-5">{duration}</span>}
+          {year && <span className="py-5 mr-5">{parseInt(year)}</span>}
+          {duration && <span className="py-5">{duration} min</span>}
         </div>
         {description && (
           <div className="py-2">

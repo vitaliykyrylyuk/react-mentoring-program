@@ -1,35 +1,60 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import NavItem from '../NavItem'
+import { fetchMovies } from '../../Actions/fetchData'
+import { useDispatch } from 'react-redux'
+import { FetchContext } from '../../Utils/FetchContext'
 
 function Nav() {
-  const navLinks = [
+  const navLinksInitialState = [
     {
       title: 'all',
-      isActive: true,
-      value: '/'
+      isActive: true
     },
     {
       title: 'Documentary',
-      value: '/'
+      isActive: false
     },
     {
       title: 'Comedy',
-      value: '/'
+      isActive: false
     },
     {
       title: 'Horror',
-      value: '/'
+      isActive: false
     },
     {
-      title: 'crime',
-      value: '/'
+      title: 'Crime',
+      isActive: false
     }
   ]
 
+  const dispatch = useDispatch()
+  const { currentFetchParams, setCurrentFetchParams } = useContext(FetchContext)
+
+  const [navItems, setNavItems] = useState(navLinksInitialState)
+
+  const handleClick = (title) => {
+    const filteredItems = navItems.map((item) => {
+      item.isActive = item.title === title
+      return item
+    })
+
+    setNavItems(filteredItems)
+    setCurrentFetchParams({ ...currentFetchParams, filter: title })
+
+    title === 'all' ? dispatch(fetchMovies()) : dispatch(fetchMovies(currentFetchParams))
+  }
+
   return (
     <div className="text-sky-500 flex">
-      {navLinks.map((link) => (
-        <NavItem key={link.title} isActive={link.isActive} title={link.title} value={link.value} />
+      {navItems.map((link) => (
+        <NavItem
+          handleClick={handleClick}
+          key={link.title}
+          isActive={link.isActive}
+          title={link.title}
+          value={link.value}
+        />
       ))}
     </div>
   )
