@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react'
+import React, { useRef, useState, useContext, useEffect } from 'react'
 import useModalHide from '../../Utils/useModalHide'
 import { CaretIcon } from '../Icons'
 import DropdownItem from '../DropdownItem'
@@ -40,10 +40,12 @@ function ResultsSort() {
     setSortState(updatedSortState)
 
     setCurrentFetchParams({ ...currentFetchParams, sortBy: id })
-
-    dispatch(fetchMovies(currentFetchParams))
   }
-
+  
+  useEffect(() => {
+    dispatch(fetchMovies(currentFetchParams))
+  }, [currentFetchParams])
+  
   return (
     <div className="relative">
       <div className="flex p-1 text-neutral-100 text-sm py-3 px-3 uppercase">
