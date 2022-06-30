@@ -1,7 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import NavItem from '../NavItem'
-import { fetchMovies } from '../../Actions/fetchData'
-import { useDispatch } from 'react-redux'
 import { FetchContext } from '../../Utils/FetchContext'
 
 function Nav() {
@@ -28,7 +26,6 @@ function Nav() {
     }
   ]
 
-  const dispatch = useDispatch()
   const { currentFetchParams, setCurrentFetchParams } = useContext(FetchContext)
 
   const [navItems, setNavItems] = useState(navLinksInitialState)
@@ -42,10 +39,6 @@ function Nav() {
     setNavItems(filteredItems)
     setCurrentFetchParams({ ...currentFetchParams, filter: title === 'all' ? '' : title })
   }
-
-  useEffect(() => {
-    dispatch(fetchMovies(currentFetchParams))
-  }, [currentFetchParams])
 
   return (
     <div className="text-sky-500 flex">
