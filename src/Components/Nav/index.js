@@ -1,35 +1,55 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import NavItem from '../NavItem'
+import { FetchContext } from '../../Utils/fetchContext'
 
 function Nav() {
-  const navLinks = [
+  const navLinksInitialState = [
     {
       title: 'all',
-      isActive: true,
-      value: '/'
+      isActive: true
     },
     {
       title: 'Documentary',
-      value: '/'
+      isActive: false
     },
     {
       title: 'Comedy',
-      value: '/'
+      isActive: false
     },
     {
       title: 'Horror',
-      value: '/'
+      isActive: false
     },
     {
-      title: 'crime',
-      value: '/'
+      title: 'Crime',
+      isActive: false
     }
   ]
 
+  const { currentFetchParams, setCurrentFetchParams } = useContext(FetchContext)
+
+  const [navItems, setNavItems] = useState(navLinksInitialState)
+
+  const handleClick = (title) => {
+    const filteredItems = navItems.map((item) => {
+      item.isActive = item.title === title
+      return item
+    })
+
+    setNavItems(filteredItems)
+    setCurrentFetchParams({ ...currentFetchParams, filter: title === 'all' ? '' : title })
+  }
+
   return (
     <div className="text-sky-500 flex">
-      {navLinks.map((link) => (
-        <NavItem key={link.title} isActive={link.isActive} title={link.title} value={link.value} />
+      {navItems.map(({ title, isActive, value }) => (
+        <NavItem
+          handleClick={handleClick}
+          key={title}
+          isActive={isActive}
+          title={title}
+          value={value}
+        />
       ))}
     </div>
   )

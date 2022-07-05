@@ -1,12 +1,15 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext, useEffect } from 'react'
 import useModalHide from '../../Utils/useModalHide'
 import { CaretIcon } from '../Icons'
 import DropdownItem from '../DropdownItem'
+import { useDispatch } from 'react-redux'
+import { fetchMovies } from '../../Actions/fetchData'
+import { FetchContext } from '../../Utils/fetchContext'
 
 function ResultsSort() {
   const defaultStates = [
     {
-      id: 'release-date',
+      id: 'release_date',
       label: 'Release date',
       isActive: true
     },
@@ -22,6 +25,8 @@ function ResultsSort() {
     }
   ]
 
+  const dispatch = useDispatch()
+  const { currentFetchParams, setCurrentFetchParams } = useContext(FetchContext)
   const toggleRef = useRef(null)
   const [sortState, setSortState] = useState(defaultStates)
   const [dropdownState, setDropdownState] = useModalHide(toggleRef, false)
@@ -33,7 +38,13 @@ function ResultsSort() {
       return item
     })
     setSortState(updatedSortState)
+
+    setCurrentFetchParams({ ...currentFetchParams, sortBy: id })
   }
+
+  useEffect(() => {
+    dispatch(fetchMovies(currentFetchParams))
+  }, [currentFetchParams])
 
   return (
     <div className="relative">
@@ -49,12 +60,12 @@ function ResultsSort() {
           onClick={handleDropdown}
           ref={toggleRef}>
           {sortState.find(({ isActive }) => isActive).label}
-          <CaretIcon className="-mr-1 ml-2 h-5 w-3" />
+          <CaretIcon className="-mr-1 ml-2 h-5 w-3 text-rose-400" />
         </button>
       </div>
       {dropdownState && (
         <div
-          className="origin-top-right absolute z-10 right-0 mt-2 w-56 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="origin-top-right absolute z-10 right-0 mt-2 w-56 rounded-sm shadow-lg bg-gray-600 ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"

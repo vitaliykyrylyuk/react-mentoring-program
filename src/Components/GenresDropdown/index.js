@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import Input from '../Input'
-import KebabCase from '../../Utils/KebabCase'
+import kebabCase from '../../Utils/kebabCase'
 import useModalHide from '../../Utils/useModalHide'
 
 function GenresDropdown(props) {
@@ -41,12 +41,12 @@ function GenresDropdown(props) {
           tabIndex="-1">
           {props.availableGenres.map((item) => (
             <label
-              htmlFor={KebabCase(item)}
-              key={KebabCase(item)}
+              htmlFor={kebabCase(item)}
+              key={kebabCase(item)}
               className="flex items-center text-white block px-4 py-2 text-sm hover:bg-rose-400 cursor-pointer">
               <input
-                key={KebabCase(item)}
-                id={KebabCase(item)}
+                key={kebabCase(item)}
+                id={kebabCase(item)}
                 onChange={(e) => handleGenreCheckbox(e)}
                 type="checkbox"
                 value={item}
