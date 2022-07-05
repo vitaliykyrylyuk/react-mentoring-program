@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import Button from '../Button'
 import { SearchIcon } from '../Icons'
-import { MovieContext } from '../../Utils/MovieContext'
+import { movieContext } from '../../Utils/movieContext'
 
 function MovieDetailsSwitch(props) {
   const { toggleModal, isMovieDetailsVisible } = props
-  const { setCurrentMovie } = useContext(MovieContext)
+  const { setCurrentMovie } = useContext(movieContext)
 
   const switchToSearch = () => {
     setCurrentMovie({})

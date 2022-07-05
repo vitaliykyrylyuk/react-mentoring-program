@@ -4,7 +4,7 @@ import { CaretIcon } from '../Icons'
 import DropdownItem from '../DropdownItem'
 import { useDispatch } from 'react-redux'
 import { fetchMovies } from '../../Actions/fetchData'
-import { FetchContext } from '../../Utils/FetchContext'
+import { FetchContext } from '../../Utils/fetchContext'
 
 function ResultsSort() {
   const defaultStates = [
@@ -41,11 +41,11 @@ function ResultsSort() {
 
     setCurrentFetchParams({ ...currentFetchParams, sortBy: id })
   }
-  
+
   useEffect(() => {
     dispatch(fetchMovies(currentFetchParams))
   }, [currentFetchParams])
-  
+
   return (
     <div className="relative">
       <div className="flex p-1 text-neutral-100 text-sm py-3 px-3 uppercase">

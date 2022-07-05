@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import NavItem from '../NavItem'
-import { FetchContext } from '../../Utils/FetchContext'
+import { FetchContext } from '../../Utils/fetchContext'
 
 function Nav() {
   const navLinksInitialState = [
@@ -42,13 +42,13 @@ function Nav() {
 
   return (
     <div className="text-sky-500 flex">
-      {navItems.map((link) => (
+      {navItems.map(({ title, isActive, value }) => (
         <NavItem
           handleClick={handleClick}
-          key={link.title}
-          isActive={link.isActive}
-          title={link.title}
-          value={link.value}
+          key={title}
+          isActive={isActive}
+          title={title}
+          value={value}
         />
       ))}
     </div>

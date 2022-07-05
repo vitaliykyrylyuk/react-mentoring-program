@@ -2,13 +2,12 @@ import React, { useState, useContext } from 'react'
 import SearchForm from '../SearchForm'
 import Modal from '../Modal'
 import MovieForm from '../MovieForm'
-import Button from '../Button'
-import { MovieContext } from '../../Utils/MovieContext'
+import { movieContext } from '../../Utils/movieContext'
 import MovieDetails from '../MovieDetails'
 import MovieDetailsSwitch from '../MovieDetailsSwitch'
 
 function Header() {
-  const { currentMovie } = useContext(MovieContext)
+  const { currentMovie } = useContext(movieContext)
 
   const [showModal, setShowModal] = useState(false)
 

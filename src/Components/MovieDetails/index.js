@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { MovieContext } from '../../Utils/MovieContext'
+import { movieContext } from '../../Utils/movieContext'
 
 function MovieDetails() {
-  const { currentMovie } = useContext(MovieContext)
+  const { currentMovie } = useContext(movieContext)
 
   const {
     title,

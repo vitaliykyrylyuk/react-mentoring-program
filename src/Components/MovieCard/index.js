@@ -6,10 +6,10 @@ import MovieForm from '../MovieForm'
 import DeleteForm from '../DeleteForm'
 import { DotsIcon } from '../Icons'
 import DropdownItem from '../DropdownItem'
-import { MovieContext } from '../../Utils/MovieContext'
+import { movieContext } from '../../Utils/movieContext'
 
 function MovieCard(props) {
-  const { setCurrentMovie } = useContext(MovieContext)
+  const { setCurrentMovie } = useContext(movieContext)
 
   const { id, poster_path: image, title, genres, release_date: year } = props.value
 
