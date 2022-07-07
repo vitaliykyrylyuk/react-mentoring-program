@@ -1,16 +1,11 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchMovies } from '../../Actions/fetchData'
+import React, { useContext, useEffect } from 'react'
 import { LoaderIcon } from '../Icons'
 
-function ErrorBoundary({ children }) {
-  const content = useSelector((state) => state.movies)
-  const dispatch = useDispatch()
+import { movieContext } from '../../Utils/movieContext'
+import { fetchMovies } from '../../Actions/fetchData'
+import { useDispatch } from 'react-redux'
 
-  useEffect(() => {
-    dispatch(fetchMovies())
-  }, [])
-
+function ErrorBoundary({ content, children }) {
   const FallbackText = () => (
     <h2 className="text-4xl text-neutral-100 uppercase font-light mb-12">
       Error occurred. Issue will be fixed soon...

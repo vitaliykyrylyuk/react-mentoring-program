@@ -1,7 +1,8 @@
 import React from 'react'
 
 function Input(props) {
-  const { className, id, label, ...rest } = props
+  const { className, id, label, as, ...rest } = props
+  const Tag = as ?? 'input'
 
   return (
     <>
@@ -10,7 +11,7 @@ function Input(props) {
           {label}
         </label>
       )}
-      <input
+      <Tag
         className={`${className} focus:ring-2 bg-gray-600 bg-opacity-80 focus:ring-rose-300 focus:outline-none appearance-none flex-1 text-sm leading-6 text-white placeholder-slate-400 rounded-sm py-3 px-5 w-full`}
         id={id}
         {...rest}

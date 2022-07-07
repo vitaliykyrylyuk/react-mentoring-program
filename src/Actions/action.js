@@ -2,10 +2,15 @@ import {
   FETCH_DATA_REQUEST,
   FETCH_DATA_SUCCESS,
   FETCH_DATA_ERROR,
-  FILTER_BY_GENRE,
-  SORT_BY_GENRE,
-  SORT_BY_RATING,
-  SORT_BY_RELEASE_DATE
+  CREATE_MOVIE_REQUEST,
+  CREATE_MOVIE_SUCCESS,
+  CREATE_MOVIE_ERROR,
+  UPDATE_MOVIE_REQUEST,
+  UPDATE_MOVIE_SUCCESS,
+  UPDATE_MOVIE_ERROR,
+  REMOVE_MOVIE_REQUEST,
+  REMOVE_MOVIE_SUCCESS,
+  REMOVE_MOVIE_ERROR
 } from './actionType'
 
 export function fetchDataRequest() {
@@ -27,4 +32,65 @@ export function fetchDataError(error) {
     payload: { error }
   }
 }
+
+export function createMovieRequest() {
+  return {
+    type: CREATE_MOVIE_REQUEST
+  }
+}
+
+export function createMovieSuccess(item) {
+  return {
+    type: CREATE_MOVIE_SUCCESS,
+    item
+  }
+}
+
+export function createMovieError(error) {
+  return {
+    type: CREATE_MOVIE_ERROR,
+    payload: { error }
+  }
+}
+
+export function updateMovieRequest() {
+  return {
+    type: UPDATE_MOVIE_REQUEST
+  }
+}
+
+export function updateMovieSuccess(item) {
+  return {
+    type: UPDATE_MOVIE_SUCCESS,
+    item
+  }
+}
+
+export function updateMovieError(error) {
+  return {
+    type: UPDATE_MOVIE_ERROR,
+    payload: { error }
+  }
+}
+
+export function removeMovieRequest() {
+  return {
+    type: REMOVE_MOVIE_REQUEST
+  }
+}
+
+export function removeMovieSuccess(item) {
+  return {
+    type: REMOVE_MOVIE_SUCCESS,
+    item
+  }
+}
+
+export function removeMovieError(error) {
+  return {
+    type: REMOVE_MOVIE_ERROR,
+    payload: { error }
+  }
+}
+
 

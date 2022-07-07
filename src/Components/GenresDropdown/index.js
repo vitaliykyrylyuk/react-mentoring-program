@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Input from '../Input'
 import kebabCase from '../../Utils/kebabCase'
 import useModalHide from '../../Utils/useModalHide'
@@ -6,7 +6,7 @@ import useModalHide from '../../Utils/useModalHide'
 function GenresDropdown(props) {
   const genreDropdownRef = useRef(null)
 
-  const [genres, setGenres] = useState([])
+  const [genres, setGenres] = useState(props.value ?? [])
   const [dropdownState, setDropdownState] = useModalHide(genreDropdownRef, false)
 
   const handleGenreCheckbox = (e) => {
@@ -16,6 +16,10 @@ function GenresDropdown(props) {
       setGenres(genres.filter((item) => item !== e.target.value))
     }
   }
+
+  useEffect(() => {
+    props.setFieldValue('genres', genres)
+  }, [genres])
 
   const onFocus = () => {
     setDropdownState(true)
@@ -28,9 +32,11 @@ function GenresDropdown(props) {
         value={genres.join(', ')}
         label="genre"
         type="text"
-        name="genre"
-        id="genre"
+        name="genres"
+        id="genres"
         placeholder="Select Genre"
+        onChange={props.onChange}
+        onBlur={props.handleBlur}
       />
       {dropdownState && (
         <div

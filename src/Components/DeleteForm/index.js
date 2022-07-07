@@ -1,18 +1,22 @@
 import React from 'react'
 import Button from '../Button'
+import { useDispatch } from 'react-redux'
+import { removeMovie } from '../../Actions/fetchData'
 
 function DeleteForm(props) {
   const { id, toggleModal } = props
+  const dispatch = useDispatch()
 
-  function handleModal(modalState) {
-    toggleModal(modalState)
+  const handleSubmit = () => {
+    dispatch(removeMovie(id))
+    toggleModal(false)
   }
 
   return (
-    <form action={id ? `delete/${id}` : ''} method="POST">
+    <form onSubmit={handleSubmit}>
       <div className="mt-6 text-white">Are you sure you want to delete this movie?</div>
       <div className="mt-6 flex justify-end">
-        <Button theme={'primary'} onClick={() => handleModal(false)} text={'Confirm'} />
+        <Button type="submit" theme={'primary'} text={'Confirm'} />
       </div>
     </form>
   )

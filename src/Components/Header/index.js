@@ -11,7 +11,7 @@ function Header() {
 
   const [showModal, setShowModal] = useState(false)
 
-  const toggleModal = React.useCallback((modalState) => setShowModal(modalState), [])
+  const toggleModal = React.useCallback((modalState) => setShowModal(modalState), [showModal])
   const isMovieDetailsVisible = Object.keys(currentMovie).length !== 0
 
   return (

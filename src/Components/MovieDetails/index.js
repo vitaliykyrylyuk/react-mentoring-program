@@ -25,9 +25,11 @@ function MovieDetails() {
       <div className="w-2/3 pl-12">
         <div className="flex items-center pt-4 font-light text-neutral-300 text-xl">
           <div className="text-4xl text-neutral-100 mr-5">{title}</div>
-          <div className="inline-flex justify-center items-center text-2xl w-14 h-14 rounded-full border-2 border-opacity-30 border-white text-green-300">
-            {rating}
-          </div>
+          {rating && (
+            <div className="inline-flex justify-center items-center text-2xl w-14 h-14 rounded-full border-2 border-opacity-30 border-white text-green-300">
+              {rating}
+            </div>
+          )}
         </div>
         {genres.length && (
           <div className="py-2">

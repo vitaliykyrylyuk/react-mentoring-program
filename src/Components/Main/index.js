@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 
 import MoviesList from '../MoviesList'
 import Nav from '../Nav'
@@ -6,8 +6,17 @@ import ResultsSort from '../ResultsSort'
 import ResultsCount from '../ResultsCount'
 import ErrorBoundary from '../ErrorBoundary'
 import { FetchContextProvider } from '../../Utils/fetchContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchMovies } from '../../Actions/fetchData'
 
 function Main() {
+  const content = useSelector((state) => state.movies.list)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchMovies())
+  }, [])
+
   return (
     <main className="p-10 bg-gray-900 flex-grow">
       <div className="max-w-screen-lg mx-auto">
@@ -18,7 +27,7 @@ function Main() {
           </FetchContextProvider>
         </div>
         <ResultsCount />
-        <ErrorBoundary>{(props) => <MoviesList {...props} />}</ErrorBoundary>
+        <ErrorBoundary content={content}>{(props) => <MoviesList {...props} />}</ErrorBoundary>
       </div>
     </main>
   )
