@@ -7,6 +7,7 @@ import DeleteForm from '../DeleteForm'
 import { DotsIcon } from '../Icons'
 import DropdownItem from '../DropdownItem'
 import { movieContext } from '../../Utils/movieContext'
+import MovieFormWrapper from '../MovieFormWrapper'
 
 function MovieCard(props) {
   const { setCurrentMovie } = useContext(movieContext)
@@ -64,7 +65,7 @@ function MovieCard(props) {
       )}
       {showEditModal && (
         <Modal title="Edit movie" toggleModal={toggleEditModal}>
-          <MovieForm id={id} toggleModal={toggleEditModal} />
+          <MovieFormWrapper id={id} toggleModal={toggleEditModal} />
         </Modal>
       )}
       {showDeleteModal && (

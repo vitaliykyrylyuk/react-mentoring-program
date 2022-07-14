@@ -1,6 +1,7 @@
 import React from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './Reducers/rootReducers'
 import { Provider } from 'react-redux'
 import { StrictMode } from 'react'
@@ -9,7 +10,7 @@ import './index.css'
 
 import App from './App'
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 const rootElement = document.getElementById('root')
 const root = createRoot(rootElement)
