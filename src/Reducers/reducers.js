@@ -39,6 +39,83 @@ function reducer(state = initialState, action) {
         }
       }
 
+    case 'CREATE_MOVIE_REQUEST':
+      return {
+        ...state,
+        currentMovie: {
+          loading: true,
+          error: null
+        }
+      }
+    case 'CREATE_MOVIE_SUCCESS':
+      return {
+        ...state,
+        currentMovie: {
+          loading: false,
+          item: action.item
+        }
+      }
+    case 'CREATE_MOVIE_ERROR':
+      return {
+        ...state,
+        currentMovie: {
+          loading: false,
+          error: action.payload.error,
+          item: []
+        }
+      }
+
+    case 'UPDATE_MOVIE_REQUEST':
+      return {
+        ...state,
+        currentMovie: {
+          loading: true,
+          error: null
+        }
+      }
+    case 'UPDATE_MOVIE_SUCCESS':
+      return {
+        ...state,
+        currentMovie: {
+          loading: false,
+          item: action.item
+        }
+      }
+    case 'UPDATE_MOVIE_ERROR':
+      return {
+        ...state,
+        currentMovie: {
+          loading: false,
+          error: action.payload.error,
+          item: []
+        }
+      }
+
+    case 'REMOVE_MOVIE_REQUEST':
+      return {
+        ...state,
+        currentMovie: {
+          loading: true,
+          error: null
+        }
+      }
+    case 'REMOVE_MOVIE_SUCCESS':
+      return {
+        ...state,
+        currentMovie: {
+          loading: false,
+          item: action.item
+        }
+      }
+    case 'REMOVE_MOVIE_ERROR':
+      return {
+        ...state,
+        currentMovie: {
+          loading: false,
+          error: action.payload.error,
+          item: []
+        }
+      }
     default:
       return state
   }

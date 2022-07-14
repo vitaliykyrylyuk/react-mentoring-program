@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import SearchForm from '../SearchForm'
 import Modal from '../Modal'
-import MovieForm from '../MovieForm'
+import MovieFormWrapper from '../MovieFormWrapper'
 import { movieContext } from '../../Utils/movieContext'
 import MovieDetails from '../MovieDetails'
 import MovieDetailsSwitch from '../MovieDetailsSwitch'
@@ -25,7 +25,7 @@ function Header() {
           <MovieDetailsSwitch {...{ isMovieDetailsVisible, toggleModal }} />
           {showModal && (
             <Modal title="Add movie" toggleModal={toggleModal}>
-              <MovieForm toggleModal={toggleModal} />
+              <MovieFormWrapper toggleModal={toggleModal} />
             </Modal>
           )}
           {isMovieDetailsVisible ? <MovieDetails /> : <SearchForm />}

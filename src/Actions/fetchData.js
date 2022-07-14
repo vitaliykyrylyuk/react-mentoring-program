@@ -14,11 +14,13 @@ import {
   removeMovieError
 } from './action'
 
+const URL = process.env.REACT_APP_API_URL
+
 export function fetchMovies(currentFetchParams) {
   return (dispatch) => {
     dispatch(fetchDataRequest())
     axios
-      .get(`http://localhost:4000/movies`, {
+      .get(`${URL}movies`, {
         params: currentFetchParams
       })
       .then((response) => {
@@ -34,7 +36,7 @@ export function updateMovie(payload) {
   return (dispatch) => {
     dispatch(updateMovieRequest())
     axios
-      .put(`http://localhost:4000/movies`, payload)
+      .put(`${URL}movies`, payload)
       .then((response) => {
         dispatch(updateMovieSuccess(response.data))
       })
@@ -48,7 +50,7 @@ export function createMovie(payload) {
   return (dispatch) => {
     dispatch(createMovieRequest())
     axios
-      .post(`http://localhost:4000/movies`, payload)
+      .post(`${URL}movies`, payload)
       .then((response) => {
         dispatch(createMovieSuccess(response.data))
       })
@@ -62,7 +64,7 @@ export function removeMovie(id) {
   return (dispatch) => {
     dispatch(removeMovieRequest())
     axios
-      .delete(`http://localhost:4000/movies/${id}`)
+      .delete(`${URL}movies/${id}`)
       .then((response) => {
         dispatch(removeMovieSuccess(response.data))
       })

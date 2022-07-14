@@ -11,11 +11,12 @@ import { fetchMovies } from '../../Actions/fetchData'
 
 function Main() {
   const content = useSelector((state) => state.movies.list)
+  const changedMovie = useSelector((state) => state.movies.currentMovie.item)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchMovies())
-  }, [])
+  }, [changedMovie])
 
   return (
     <main className="p-10 bg-gray-900 flex-grow">

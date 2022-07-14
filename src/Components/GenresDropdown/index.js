@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Input from '../Input'
 import kebabCase from '../../Utils/kebabCase'
 import useModalHide from '../../Utils/useModalHide'
+import availableGenres from '../../Mocks/genres'
 
 function GenresDropdown(props) {
   const genreDropdownRef = useRef(null)
@@ -11,7 +12,7 @@ function GenresDropdown(props) {
 
   const handleGenreCheckbox = (e) => {
     if (e.target.checked) {
-      setGenres([...genres, e.target.value])
+      setGenres([...new Set([...genres, e.target.value])])
     } else {
       setGenres(genres.filter((item) => item !== e.target.value))
     }
@@ -40,12 +41,12 @@ function GenresDropdown(props) {
       />
       {dropdownState && (
         <div
-          className="origin-top-right absolute z-10 mt-1 left-0 w-full rounded-sm shadow-lg bg-gray-900 ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="origin-top-right absolute z-10 mt-1 left-0 w-full rounded-sm shadow-lg bg-gray-900 ring-1 ring-black ring-opacity-5 focus:outline-none max-h-52 overflow-auto"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
           tabIndex="-1">
-          {props.availableGenres.map((item) => (
+          {availableGenres.map((item) => (
             <label
               htmlFor={kebabCase(item)}
               key={kebabCase(item)}
@@ -56,6 +57,7 @@ function GenresDropdown(props) {
                 onChange={(e) => handleGenreCheckbox(e)}
                 type="checkbox"
                 value={item}
+                checked={genres.includes(item)}
                 className="w-4 h-4 mr-2 border border-rose-300 rounded bg-gray-50 focus:ring-3 focus:ring-rose-300 accent-rose-400"
               />
               {item}
