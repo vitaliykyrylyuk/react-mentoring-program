@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import { movieContext } from '../../Utils/movieContext'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 function MovieDetails() {
-  const { currentMovie } = useContext(movieContext)
+  const currentMovie = useSelector((state) => state.movies.currentMovie.item)
 
   const {
     title,

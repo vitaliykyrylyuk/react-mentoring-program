@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
-import Header from './Components/Header'
-import Main from './Components/Main'
-import Footer from './Components/Footer'
-import { MovieContextProvider } from './Utils/movieContext'
+import React from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Search from './Pages/Search'
+import NotFound from './Pages/NotFound'
 
 function App() {
-  const [movieName, setMovieName] = useState('')
-
   return (
-    <>
-      <MovieContextProvider>
-        <Header movieDetails={movieName} />
-        <Main movieDetails={movieName} />
-      </MovieContextProvider>
-      <Footer />
-    </>
+    <div className="flex flex-col h-[calc(100vh_+_1px)]">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/search" replace />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/search/:searchQuery" element={<Search />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 

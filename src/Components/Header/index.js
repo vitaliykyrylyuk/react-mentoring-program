@@ -1,18 +1,18 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import SearchForm from '../SearchForm'
 import Modal from '../Modal'
 import MovieFormWrapper from '../MovieFormWrapper'
-import { movieContext } from '../../Utils/movieContext'
 import MovieDetails from '../MovieDetails'
 import MovieDetailsSwitch from '../MovieDetailsSwitch'
+import { useSelector } from 'react-redux'
 
 function Header() {
-  const { currentMovie } = useContext(movieContext)
+  const currentMovie = useSelector((state) => state.movies.currentMovie.item)
 
   const [showModal, setShowModal] = useState(false)
 
   const toggleModal = React.useCallback((modalState) => setShowModal(modalState), [showModal])
-  const isMovieDetailsVisible = Object.keys(currentMovie).length !== 0
+  const isMovieDetailsVisible = currentMovie?.id
 
   return (
     <>

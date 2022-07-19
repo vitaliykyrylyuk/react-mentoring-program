@@ -11,7 +11,10 @@ import {
   createMovieError,
   removeMovieRequest,
   removeMovieSuccess,
-  removeMovieError
+  removeMovieError,
+  fetchSingleMovieRequest,
+  fetchSingleMovieSuccess,
+  fetchSingleMovieError
 } from './action'
 
 const URL = process.env.REACT_APP_API_URL
@@ -28,6 +31,20 @@ export function fetchMovies(currentFetchParams) {
       })
       .catch((error) => {
         dispatch(fetchDataError(error))
+      })
+  }
+}
+
+export function fetchSingleMovie(payload) {
+  return (dispatch) => {
+    dispatch(fetchSingleMovieRequest())
+    axios
+      .get(`${URL}movies/${payload}`)
+      .then((response) => {
+        dispatch(fetchSingleMovieSuccess(response.data))
+      })
+      .catch((error) => {
+        dispatch(fetchSingleMovieError(error))
       })
   }
 }

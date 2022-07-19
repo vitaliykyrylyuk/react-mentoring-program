@@ -7,7 +7,8 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, 'build')
+    path: path.resolve(__dirname, 'build'),
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -30,6 +31,6 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(dotenv.parsed)
-    }),
+    })
   ]
 }

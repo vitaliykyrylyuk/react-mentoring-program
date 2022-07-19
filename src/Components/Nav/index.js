@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import NavItem from '../NavItem'
-import { FetchContext } from '../../Utils/fetchContext'
+import { useSearchParams } from 'react-router-dom'
 
 function Nav() {
   const navLinksInitialState = [
@@ -26,7 +26,15 @@ function Nav() {
     }
   ]
 
-  const { currentFetchParams, setCurrentFetchParams } = useContext(FetchContext)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const searchParamsValues = Object.fromEntries(searchParams)
+  const { filter } = searchParamsValues
+
+  if (filter) {
+    navLinksInitialState.forEach((item) => {
+      item.isActive = item.title.toLowerCase() === filter.toLowerCase()
+    })
+  }
 
   const [navItems, setNavItems] = useState(navLinksInitialState)
 
@@ -37,7 +45,7 @@ function Nav() {
     })
 
     setNavItems(filteredItems)
-    setCurrentFetchParams({ ...currentFetchParams, filter: title === 'all' ? '' : title })
+    setSearchParams({ ...searchParamsValues, filter: title === 'all' ? '' : title })
   }
 
   return (

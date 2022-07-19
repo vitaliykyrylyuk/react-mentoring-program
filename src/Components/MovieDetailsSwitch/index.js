@@ -1,14 +1,18 @@
 import React, { useContext } from 'react'
 import Button from '../Button'
 import { SearchIcon } from '../Icons'
-import { movieContext } from '../../Utils/movieContext'
+import { useSearchParams } from 'react-router-dom'
 
 function MovieDetailsSwitch(props) {
   const { toggleModal, isMovieDetailsVisible } = props
-  const { setCurrentMovie } = useContext(movieContext)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const searchParamsValues = Object.fromEntries(searchParams)
 
   const switchToSearch = () => {
-    setCurrentMovie({})
+    setSearchParams({
+      ...searchParamsValues,
+      movie: ''
+    })
   }
 
   return (

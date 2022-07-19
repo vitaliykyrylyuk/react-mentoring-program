@@ -116,6 +116,32 @@ function reducer(state = initialState, action) {
           item: []
         }
       }
+
+    case 'FETCH_SINGLE_MOVIE_REQUEST':
+      return {
+        ...state,
+        currentMovie: {
+          loading: true,
+          error: null
+        }
+      }
+    case 'FETCH_SINGLE_MOVIE_SUCCESS':
+      return {
+        ...state,
+        currentMovie: {
+          loading: false,
+          item: action.item
+        }
+      }
+    case 'FETCH_SINGLE_MOVIE_ERROR':
+      return {
+        ...state,
+        currentMovie: {
+          loading: false,
+          error: action.payload.error,
+          item: []
+        }
+      }
     default:
       return state
   }
