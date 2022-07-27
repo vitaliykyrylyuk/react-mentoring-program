@@ -6,6 +6,8 @@ import { useSearchParams } from 'react-router-dom'
 import { useIsMount } from '../../Utils/useIsMount'
 
 function ResultsSort() {
+  const SORT_BY_ASCENDING = 'asc'
+  const SORT_BY_DESCENDING = 'desc'
   const defaultSortStates = [
     {
       id: 'release_date',
@@ -38,7 +40,8 @@ function ResultsSort() {
   const toggleRef = useRef(null)
   const [sortState, setSortState] = useState(defaultSortStates)
   const [dropdownState, setDropdownState] = useModalHide(toggleRef, false)
-  const [orderState, setOrderState] = useState(sortOrder ?? 'asc')
+  const [orderState, setOrderState] = useState(sortOrder ?? SORT_BY_ASCENDING)
+  const sortOrderCssClass = orderState === SORT_BY_ASCENDING ? 'rotate-0' : 'rotate-180'
 
   const handleDropdown = () => setDropdownState(!dropdownState)
   const handleSort = (id) => {
@@ -50,7 +53,9 @@ function ResultsSort() {
   }
 
   const toggleOrder = () => {
-    orderState === 'asc' ? setOrderState('desc') : setOrderState('asc')
+    orderState === SORT_BY_ASCENDING
+      ? setOrderState(SORT_BY_DESCENDING)
+      : setOrderState(SORT_BY_ASCENDING)
   }
 
   useEffect(() => {
@@ -80,9 +85,7 @@ function ResultsSort() {
         </button>
         <button
           type="button"
-          className={`${
-            orderState === 'asc' ? 'rotate-0' : 'rotate-180'
-          } inline-flex justify-center w-full text-sm font-medium uppercase text-neutral-100 hover:text-rose-400`}
+          className={`${sortOrderCssClass} inline-flex justify-center w-full text-sm font-medium uppercase text-neutral-100 hover:text-rose-400`}
           onClick={toggleOrder}>
           <CaretIcon className="h-5 w-3 text-rose-400" />
         </button>
