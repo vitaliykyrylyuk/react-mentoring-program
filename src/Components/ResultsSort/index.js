@@ -1,22 +1,23 @@
-import React, { useRef, useState, useContext, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import useModalHide from '../../Utils/useModalHide'
 import { CaretIcon } from '../Icons'
 import DropdownItem from '../DropdownItem'
-import { useDispatch } from 'react-redux'
-import { fetchMovies } from '../../Actions/fetchData'
-import { FetchContext } from '../../Utils/fetchContext'
+import { useSearchParams } from 'react-router-dom'
+import { useIsMount } from '../../Utils/useIsMount'
 
 function ResultsSort() {
-  const defaultStates = [
+  const SORT_BY_ASCENDING = 'asc'
+  const SORT_BY_DESCENDING = 'desc'
+  const defaultSortStates = [
     {
       id: 'release_date',
       label: 'Release date',
-      isActive: true
+      isActive: false
     },
     {
       id: 'rating',
       label: 'Rating',
-      isActive: false
+      isActive: true
     },
     {
       id: 'title',
@@ -25,26 +26,47 @@ function ResultsSort() {
     }
   ]
 
-  const dispatch = useDispatch()
-  const { currentFetchParams, setCurrentFetchParams } = useContext(FetchContext)
+  const isMount = useIsMount()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const searchParamsValues = Object.fromEntries(searchParams)
+  const { sortOrder, sortBy } = searchParamsValues
+
+  if (sortBy) {
+    defaultSortStates.forEach((item) => {
+      item.isActive = item.id === sortBy
+    })
+  }
+
   const toggleRef = useRef(null)
-  const [sortState, setSortState] = useState(defaultStates)
+  const [sortState, setSortState] = useState(defaultSortStates)
   const [dropdownState, setDropdownState] = useModalHide(toggleRef, false)
+  const [orderState, setOrderState] = useState(sortOrder ?? SORT_BY_ASCENDING)
+  const sortOrderCssClass = orderState === SORT_BY_ASCENDING ? 'rotate-0' : 'rotate-180'
 
   const handleDropdown = () => setDropdownState(!dropdownState)
   const handleSort = (id) => {
-    const updatedSortState = defaultStates.map((item) => {
+    const updatedSortState = defaultSortStates.map((item) => {
       item.isActive = item.id === id
       return item
     })
     setSortState(updatedSortState)
+  }
 
-    setCurrentFetchParams({ ...currentFetchParams, sortBy: id })
+  const toggleOrder = () => {
+    orderState === SORT_BY_ASCENDING
+      ? setOrderState(SORT_BY_DESCENDING)
+      : setOrderState(SORT_BY_ASCENDING)
   }
 
   useEffect(() => {
-    dispatch(fetchMovies(currentFetchParams))
-  }, [currentFetchParams])
+    if (!isMount) {
+      setSearchParams({
+        ...searchParamsValues,
+        sortBy: sortState.find(({ isActive }) => isActive).id,
+        sortOrder: orderState
+      })
+    }
+  }, [sortState, orderState])
 
   return (
     <div className="relative">
@@ -53,14 +75,19 @@ function ResultsSort() {
 
         <button
           type="button"
-          className="inline-flex justify-center w-full px-4 text-sm font-medium uppercase text-neutral-100 hover:text-rose-400"
+          className="inline-flex justify-center w-full px-4 text-sm font-medium uppercase text-neutral-100 hover:text-rose-400 whitespace-nowrap"
           id="menu-button"
           aria-expanded="true"
           aria-haspopup="true"
           onClick={handleDropdown}
           ref={toggleRef}>
           {sortState.find(({ isActive }) => isActive).label}
-          <CaretIcon className="-mr-1 ml-2 h-5 w-3 text-rose-400" />
+        </button>
+        <button
+          type="button"
+          className={`${sortOrderCssClass} inline-flex justify-center w-full text-sm font-medium uppercase text-neutral-100 hover:text-rose-400`}
+          onClick={toggleOrder}>
+          <CaretIcon className="h-5 w-3 text-rose-400" />
         </button>
       </div>
       {dropdownState && (

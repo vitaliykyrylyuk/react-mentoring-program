@@ -7,16 +7,33 @@ import ResultsCount from '../ResultsCount'
 import ErrorBoundary from '../ErrorBoundary'
 import { FetchContextProvider } from '../../Utils/fetchContext'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchMovies } from '../../Actions/fetchData'
+import { fetchMovies, fetchSingleMovie } from '../../Actions/fetchData'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 function Main() {
   const content = useSelector((state) => state.movies.list)
-  const changedMovie = useSelector((state) => state.movies.currentMovie.item)
   const dispatch = useDispatch()
 
+  const { searchQuery } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const { searchBy = 'title', sortOrder, sortBy, filter, movie } = Object.fromEntries(searchParams)
+  
   useEffect(() => {
-    dispatch(fetchMovies())
-  }, [changedMovie])
+    dispatch(
+      fetchMovies({
+        search: searchQuery,
+        searchBy,
+        sortOrder,
+        sortBy,
+        filter
+      })
+    )
+    
+    if (movie || movie === '') {
+      dispatch(fetchSingleMovie(movie))
+    }
+  }, [searchParams, searchQuery])
 
   return (
     <main className="p-10 bg-gray-900 flex-grow">

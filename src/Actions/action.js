@@ -10,7 +10,10 @@ import {
   UPDATE_MOVIE_ERROR,
   REMOVE_MOVIE_REQUEST,
   REMOVE_MOVIE_SUCCESS,
-  REMOVE_MOVIE_ERROR
+  REMOVE_MOVIE_ERROR,
+  FETCH_SINGLE_MOVIE_REQUEST,
+  FETCH_SINGLE_MOVIE_SUCCESS,
+  FETCH_SINGLE_MOVIE_ERROR
 } from './actionType'
 
 export function fetchDataRequest() {
@@ -93,4 +96,22 @@ export function removeMovieError(error) {
   }
 }
 
+export function fetchSingleMovieRequest() {
+  return {
+    type: FETCH_SINGLE_MOVIE_REQUEST
+  }
+}
 
+export function fetchSingleMovieSuccess(item) {
+  return {
+    type: FETCH_SINGLE_MOVIE_SUCCESS,
+    item
+  }
+}
+
+export function fetchSingleMovieError(error) {
+  return {
+    type: FETCH_SINGLE_MOVIE_ERROR,
+    payload: { error }
+  }
+}

@@ -1,16 +1,23 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import useModalHide from '../../Utils/useModalHide'
 import Modal from '../Modal'
-import MovieForm from '../MovieForm'
 import DeleteForm from '../DeleteForm'
 import { DotsIcon } from '../Icons'
 import DropdownItem from '../DropdownItem'
-import { movieContext } from '../../Utils/movieContext'
 import MovieFormWrapper from '../MovieFormWrapper'
+import { useSearchParams } from 'react-router-dom'
 
 function MovieCard(props) {
-  const { setCurrentMovie } = useContext(movieContext)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const searchParamsValues = Object.fromEntries(searchParams)
+
+  const setMovieParam = (id) => {
+    setSearchParams({
+      ...searchParamsValues,
+      movie: id
+    })
+  }
 
   const { id, poster_path: image, title, genres, release_date: year } = props.value
 
@@ -39,7 +46,7 @@ function MovieCard(props) {
         alt={title}
         onError={(i) => (i.target.src = 'https://via.placeholder.com/400x600.png?text=NO+IMAGE')}
         onClick={() => {
-          setCurrentMovie(props.value)
+          setMovieParam(id)
           scrollTop()
         }}
       />
@@ -78,7 +85,7 @@ function MovieCard(props) {
         <div
           className="cursor-pointer"
           onClick={() => {
-            setCurrentMovie(props.value)
+            setMovieParam(id)
             scrollTop()
           }}>
           {title}
